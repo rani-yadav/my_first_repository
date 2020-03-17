@@ -1,0 +1,5 @@
+<%if params[:question_id].present?%>
+	$('#question_comment-<%= params[:question_id] %> a').parent().html("<%= j render 'form', commentable: @commentable, comment: @comment, remote: true %>")
+<% else%>
+	$('#answer_comment-<%= params[:answer_id] %> a').parent().html("<%= j render 'form', commentable: @commentable, comment: @comment, remote: true %>")
+<%end%>

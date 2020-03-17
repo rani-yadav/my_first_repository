@@ -1,0 +1,34 @@
+<%= simple_form_for [question, answer] do |form| %>
+ <% if answer.errors.any? %>
+    <div id="errors explation">
+        <h2><%= pluralize(answer.errors.count, "error") %> prohibited
+              this question from being saved:</h2>
+        <ul>
+          <% answer.errors.full_messages.each do |message| %>
+          <li><%= message%></li>
+          <% end %>
+        </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.input :body, as: :text, class: "form-control" %>
+  </div>
+
+  <div class= "btn-btn-primary">
+    <%= form.submit "submit", class: "btn btn-primary"%>
+    <%= link_to 'back', user_question_path(current_user, question)%>
+  </div>
+<% end %>
+
+
+<script>   
+$(document).ready ->
+  $("#new_answer").on("ajax:success", (event) ->
+    [data, status, xhr] = event.detail
+    $("#new_answer").append xhr.responseText
+  ).on "ajax:error", (event) ->
+    $("#new_answer").append "<p>ERROR</p>"
+
+</script>
+

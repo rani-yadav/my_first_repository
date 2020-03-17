@@ -1,0 +1,71 @@
+
+<h3>Questions</h3>
+
+<p>
+	<strong> User_email:</strong>
+	<%= @question.user.email%>
+</p> 
+
+<p>
+	<strong> Category:</strong>
+	<%= @question.category%>
+</p>
+
+<p>
+	<strong> Title:</strong>
+	<%= @question.title%>
+</p>
+
+<p>
+	<strong> Body:</strong>
+	<strong> <%= @question.body%> </strong>
+</p>
+
+<p>
+	<% @comments = @question.comments.each do |comment|%>
+	<%= comment.user.email%> -
+	<%= comment.body%><br>
+	<%= link_to 'edit', edit_question_comment_path(@question, comment) if current_user == comment.user %> |
+	<%= link_to 'destroy', question_comment_path(@question, comment), method: :delete, data: { confirm: 'Are you sure?'} if current_user == comment.user%> <br>
+	<%end %>
+</p>
+
+<p id="question_comment-<%= @question.id%>"> 
+	 | <%= link_to 'create comment', new_question_comment_path(@question), remote: true%> |
+</p>
+<!-- <div> 
+    <%#= render 'comments/form', question: @question, comment:  @question.comments.build %>
+</div>
+ -->
+<h2>answers</h2>
+<div>
+	<% @answers.each do |answer|%>
+		<p>
+			<%= answer.user.email%> :
+			<strong><%= answer.body%></strong> <br>
+
+			<%= link_to 'edit', edit_question_answer_path(@question, answer) if current_user== answer.user %> | 
+			
+			<%= link_to 'destroy',question_answer_path(@question, answer), method: :delete, data: { confirm: 'Are you sure?'}if current_user== answer.user%> |
+
+				<p id="answer_comment-<%= answer.id%>"><%= link_to 'create comment', new_answer_comment_path(answer), remote: true%>
+			  </p>
+				
+		</p>
+
+		<p> 
+		<% @comments= answer.comments.each do |comment|%>
+			<%= comment.user.email%> - 
+			<%= comment.body%> <br>
+			<%= link_to 'edit', edit_answer_comment_path(answer, comment)if current_user == comment.user %> 
+			<%= link_to 'destroy', answer_comment_path(answer, comment), method: :delete, data: { confirm: 'Are you sure?'}if current_user == comment.user%> <br> 
+		<%end%>
+	 </p>
+	<% end %> 
+</div>
+
+<div id="new_answer">
+	 <%= link_to 'create answer', new_question_answer_path(@question, @answer),  remote: true %> 
+ </div>
+
+<%= link_to 'back', user_questions_path(current_user) %> 

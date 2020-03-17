@@ -1,0 +1,26 @@
+
+<h2 class="el-title">Question</h2>
+<table>
+	<thead>
+		<tr>
+			<th> User_email </th>	
+			<th>category</th>
+			<th> Title </th>
+			<th> Body </th>	
+		</tr>
+	</thead>
+	<tbody>
+		<% @questions.each do |question|%>
+		<tr>
+			<td><%=question.user.email%></td>
+			<td><%=question.category%></td>
+			<td><%=question.title%></td><br>
+			<td><%=question.body%></td>
+			<td><%= link_to 'show', user_question_path(current_user, question), class: "site-btn sb-dark"%></td>
+			<td><%= link_to 'edit', edit_user_question_path(current_user, question), class: "site-btn mb-2 mr-2" if current_user==question.user %></td>
+			<td><%= link_to 'destroy', user_question_path(current_user, question), class: "site-btn mb-2 mr-2", method: :delete, data: { confirm: 'Are you sure?' } if current_user== question.user  %></td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
+<%= link_to 'back', root_path, class: "site-btn mb-2 mr-2" %>

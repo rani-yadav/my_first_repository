@@ -1,0 +1,33 @@
+<%= simple_form_for [user,question],local: true  do |form| %>
+  <% if question.errors.any? %>
+    <div id="errors explation">
+        <h2><%= pluralize(question.errors.count, "error") %> prohibited
+              this question from being saved:</h2>
+        <ul>
+          <% question.errors.full_messages.each do |message| %>
+          <li><%= message%></li>
+          <% end %>
+        </ul>
+    </div>
+  <% end %>
+
+  <div class= "form-control">
+    <%= form.input :title%><br>
+  </div>
+
+  <div >
+    <%= form.input :body, as: :text %><br> 
+  </div>
+  <span>Select Categories</span>
+  <div> 
+    <%= form.select(:category, [['java', 'java'],['ruby', 'ruby'],[' C', 'C'],['python', 'python']],{ prompt: :"Please select"},{ :multiple => true, :size => 5 }) %>
+  </div><br>
+
+  <div class= "btn-btn-primary" >
+    <%= form.submit "submit", class: "btn btn-primary"%>
+  </div>
+<% end %>
+
+  <script>
+    $(document).ready(function() { $("#question_category").select2(); });
+  </script>

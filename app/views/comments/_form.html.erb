@@ -1,0 +1,35 @@
+
+<%= simple_form_for [commentable, comment] do |form| %>
+<% if comment.errors.any? %>
+    <div id="errors explation">
+        <h2><%= pluralize(comment.errors.count, "error") %> prohibited
+              this comment from being saved:</h2>
+        <ul>
+          <% comment.errors.full_messages.each do |message| %>
+          <li><%= message%></li>
+          <% end %>
+        </ul>
+    </div>
+  <% end %>
+ 
+  <div  class="form-group" >
+    <%= form.input :body, as: :text,  class: "form-control"%><br> 
+  </div>
+
+  <div class= "btn-btn-primary" >
+    <%= form.submit "submit", class: "btn btn-primary"%>
+  </div>
+<% end %>
+
+<script>   
+$(document).ready ->
+  $("#question_comment").on("ajax:success", (event) ->
+    [data, status, xhr] = event.detail
+    $("#question_comment").append xhr.responseText
+  ).on "ajax:error", (event) ->
+    $("#question_comment").append "<p>ERROR</p>"
+</script>
+
+
+
+
